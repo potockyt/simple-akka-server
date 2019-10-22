@@ -1,0 +1,64 @@
+openapi: '3.0.0'
+info:
+  title: Simple akka server
+  description: Simple akka server
+  version: '1'
+
+servers:
+  - url: /api
+
+paths:
+  /time:
+    get:
+      summary: Returns epoch time in milliseconds
+      responses:
+        '200':
+          description: An epoch time
+          content:
+            application/vnd.samazamaworks.v1+json:
+              schema:
+                type: object
+                properties:
+                  epochMillis:
+                    type: integer
+                    description: Epoch time in milliseconds
+
+  /file:
+    get:
+      summary: Returns first N bytes of file stored on server
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            description: The numbers of bytes to return
+      responses:
+        '200':
+          description: First N bytes of file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+  /fetch:
+    post:
+      summary: Returns contents of URL provided in payload
+      requestBody:
+        description: Fetch payload with specified URL
+        content:
+          application/vnd.samazamaworks.v1+json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: URL of content to fetch
+      responses:
+        '200':
+          description: Contents of url
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
