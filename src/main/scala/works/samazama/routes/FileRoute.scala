@@ -7,6 +7,7 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusC
 import akka.http.scaladsl.server.Route
 import akka.stream.scaladsl.Source
 import works.samazama.api.{EmptyResponse, V1}
+import works.samazama.config.AppConfig
 import works.samazama.directives.ApiDirectives
 
 import scala.collection.{AbstractIterator, Iterator}
@@ -20,7 +21,8 @@ object FileRoute extends ApiDirectives {
     setupResource("file") {
       pathEnd {
         get {
-          parameters("limit".as[Long]) { limit =>
+          parameters("limit".as[Long].?) { limitOpt =>
+            val limit = limitOpt.getOrElse(AppConfig.akka.maxContentLength)
             if (limit < 0) {
               complete(EmptyResponse(StatusCodes.BadRequest))
             } else {

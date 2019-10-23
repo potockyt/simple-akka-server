@@ -6,7 +6,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.{Route, RouteConcatenation}
 import akka.stream.ActorMaterializer
 import works.samazama.config.AppConfig
-import works.samazama.routes.{FetchRoute, FileRoute, TimeRoute}
+import works.samazama.routes.{AllRoutes, FetchRoute, FileRoute, TimeRoute}
 
 import scala.concurrent.ExecutionContext
 import scala.io.StdIn
@@ -23,11 +23,7 @@ object Boot extends App with RouteConcatenation {
     (AppConfig.http.interface, AppConfig.http.port)
   } match {
     case Success((interface, port)) =>
-      val route = Route.seal {
-        TimeRoute.route ~
-        FileRoute.route ~
-        FetchRoute.route
-      }
+      val route = Route.seal { AllRoutes() }
 
       val bindHttp = Http().bindAndHandle(handler = route, interface = interface, port = port)
 

@@ -14,4 +14,8 @@ object AppConfig extends ConfigSupport {
     lazy val port: Int = config.getInt("app.http.port")
     lazy val apiPath: String = config.getString("app.http.api.path")
   }
+
+  object akka {
+    lazy val maxContentLength: Long = config.getLong("akka.http.client.parsing.max-content-length")
+  }
 }

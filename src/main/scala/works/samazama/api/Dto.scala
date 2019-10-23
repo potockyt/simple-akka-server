@@ -4,7 +4,7 @@ import works.samazama.validation.{InvalidUrl, Rules, Validatable}
 
 object Dto {
   // out
-  final case class EpochMillis(epochMillis: Long = System.currentTimeMillis)
+  final case class EpochTime(epochMillis: Long)
 
   // in
   final case class Fetch(url: String) extends Validatable[Fetch] {

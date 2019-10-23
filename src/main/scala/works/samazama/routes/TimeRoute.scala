@@ -12,7 +12,7 @@ object TimeRoute extends ApiDirectives {
       pathEnd {
         import works.samazama.api.V1._
         get {
-          complete((StatusCodes.OK, Dto.EpochMillis()))
+          complete((StatusCodes.OK, Dto.EpochTime(epochMillis = System.currentTimeMillis)))
         }
       }
     }

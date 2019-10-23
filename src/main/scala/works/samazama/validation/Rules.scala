@@ -9,6 +9,7 @@ import scala.util.Try
 case object InvalidUrl extends ValidationFailure("url", "URL is not valid")
 
 object Rules {
+
   def validHttpUrl(url: String, vf: ValidationFailure): ValidatedNel[ValidationFailure, String] =
     Try {
       val uri = Uri.parseAbsolute(url)
